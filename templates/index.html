@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Metro Timings App</title>
+    <style>
+/* style.css */
+
+/* Add general styles */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+label,
+select,
+button {
+  margin: 5px;
+}
+
+/* Add responsiveness */
+/* For screens smaller than 600px */
+@media (max-width: 600px) {
+  form {
+    flex-direction: column;
+  }
+
+  label,
+  select,
+  button {
+    width: 100%;
+  }
+}
+
+/* Additional styles for text response */
+.text-response {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+    </style>
+</head>
+<body>
+    <div class="head" style="background-color: aquamarine; color: black;">
+        <h1>Metro Timings App</h1>
+    </div>
+    <form method="post">
+        <label for="source">Source Station:</label>
+        <select name="source_station" id="source">
+            <option value="SELECT SCOURCE">SELECT SCOURCE</option>
+            {% for station in stations %}
+                <option value="{{ station }}">{{ station }}</option>
+            {% endfor %}
+        </select>
+        <label for="destination">Destination Station:</label>
+        <select name="destination_station" id="destination">
+            <option value="SELECT DESTINATION">SELECT DESTINATION</option>
+            {% for station in stations %}
+                <option value="{{ station }}">{{ station }}</option>
+            {% endfor %}
+        </select>
+        <label for="direction">Direction (up or down):</label>
+        <select name="direction" id="direction">
+            <option value="up">Up</option>
+            <option value="down">Down</option>
+        </select>
+
+        <button type="submit" style="height: 50px; width: auto;">Find Train Timings</button>
+    </form>
+
+    {% if result %}
+    <div class="text-response">
+        <h2>Train Timings:</h2>
+        <table style="width: 100%;">
+            <tr>
+                <th colspan="2">{{ result[0].source }} to {{ result[0].destination }}</th>
+            </tr>
+            <tr>
+                <th>Departure Time in {{ result[0].source }}</th>
+                <th>Arrival Time in {{ result[0].destination }}</th>
+            </tr>
+            {% for timing in result %}
+                <tr>
+                    <td style="text-align: center;">{{ timing.departure }}</td>
+                    <td style="text-align: center;">{{ timing.arrival }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% else %}
+    <div class="text-response">
+        <p>No trains found for the specified source and destination in the given direction.</p>
+    </div>
+{% endif %}
+
+
+
+</body>
+</html>
