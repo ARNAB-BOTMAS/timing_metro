@@ -3,60 +3,87 @@
 <head>
     <title>Metro Timings App</title>
     <style>
-/* style.css */
+        /* Add general styles */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
 
-/* Add general styles */
-body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-  margin: 20px;
-}
+        .head {
+            background-color: aquamarine;
+            color: black;
+            text-align: center;
+            padding: 10px;
+        }
 
-h1 {
-  text-align: center;
-}
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
 
-form {
-  max-width: 500px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
+        label,
+        select,
+        button {
+            margin: 5px;
+        }
 
-label,
-select,
-button {
-  margin: 5px;
-}
+        /* Add responsiveness */
+        /* For screens smaller than 600px */
+        @media (max-width: 600px) {
+            form {
+                flex-direction: column;
+            }
 
-/* Add responsiveness */
-/* For screens smaller than 600px */
-@media (max-width: 600px) {
-  form {
-    flex-direction: column;
-  }
+            label,
+            select,
+            button {
+                width: 100%;
+            }
+        }
 
-  label,
-  select,
-  button {
-    width: 100%;
-  }
-}
+        /* Additional styles for text response */
+        .text-response {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
 
-/* Additional styles for text response */
-.text-response {
-  margin-top: 20px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-}
+        /* Make the table responsive */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            text-align: center;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* For screens smaller than 600px */
+        @media (max-width: 600px) {
+            th,
+            td {
+                font-size: 14px;
+            }
+        }
 
     </style>
 </head>
 <body>
-    <div class="head" style="background-color: aquamarine; color: black;">
+    <div class="head">
         <h1>Metro Timings App</h1>
     </div>
     <form method="post">
@@ -86,7 +113,7 @@ button {
     {% if result %}
     <div class="text-response">
         <h2>Train Timings:</h2>
-        <table style="width: 100%;">
+        <table>
             <tr>
                 <th colspan="2">{{ result[0].source }} to {{ result[0].destination }}</th>
             </tr>
@@ -96,8 +123,8 @@ button {
             </tr>
             {% for timing in result %}
                 <tr>
-                    <td style="text-align: center;">{{ timing.departure }}</td>
-                    <td style="text-align: center;">{{ timing.arrival }}</td>
+                    <td>{{ timing.departure }}</td>
+                    <td>{{ timing.arrival }}</td>
                 </tr>
             {% endfor %}
         </table>
@@ -107,8 +134,6 @@ button {
         <p>No trains found for the specified source and destination in the given direction.</p>
     </div>
 {% endif %}
-
-
 
 </body>
 </html>
